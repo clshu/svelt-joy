@@ -1,1 +1,4 @@
-<h1>Hello World</h1>
+<script lang="ts">
+</script>
+
+<h1>Home page</h1>
