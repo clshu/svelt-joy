@@ -4,6 +4,7 @@ export interface IPost {
 	title: string;
 	content?: string;
 	slug: string;
+	published: boolean;
 }
 
 const postSchema = new Schema<IPost>(
@@ -16,12 +17,16 @@ const postSchema = new Schema<IPost>(
 		slug: {
 			type: String,
 			unique: true
+		},
+		published: {
+			type: Boolean,
+			default: false
 		}
 	},
 	{ timestamps: true }
 );
 
-console.log('-> Creating Post');
+// console.log('-> Creating Post');
 const Post = models.Post || model('Post', postSchema);
 
 export default Post;
