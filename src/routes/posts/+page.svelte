@@ -1,24 +1,15 @@
 <script lang="ts">
-	import type { IPost } from '$lib/models/post';
+	import type { PageData } from './$types';
 
-	const getPosts = async () => {
-		const response = await fetch('api/posts');
-		const posts: IPost[] = await response.json();
-		return posts;
-	};
+	export let data: PageData;
 </script>
 
 <h1>Posts</h1>
 
-{#await getPosts()}
-	<p>Loading...</p>
-{:then posts}
-	<h4>Posts length: {posts.length}</h4>
+<p>Posts length: {data.posts.length}</p>
+
+{#each data.posts as { slug, title }}
 	<ul>
-		{#each posts as { slug, title }}
-			<li>{slug}: {title}</li>
-		{/each}
+		<a href="/posts/{slug}">{title}</a>
 	</ul>
-{:catch error}
-	<p>{error.message}</p>
-{/await}
+{/each}
