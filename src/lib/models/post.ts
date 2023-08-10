@@ -1,4 +1,5 @@
-import { Schema, model, models } from 'mongoose';
+import pkg from 'mongoose';
+const { Schema, models, model } = pkg;
 
 export interface IPost {
 	title: string;
