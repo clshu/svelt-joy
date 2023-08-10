@@ -12,6 +12,6 @@
 
 {#each posts as { slug, title }}
 	<ul>
-		<a href="/posts/{slug}">{title}</a>
+		<a href="/api/posts/{slug}">{title}</a>
 	</ul>
 {/each}
