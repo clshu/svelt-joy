@@ -12,16 +12,15 @@ export const dbConnect = async () => {
 		return;
 	}
 
-	const db = await mongoose.connect(uri);
-	console.log('-> DB is connected.');
+	await mongoose.connect(uri).then(() => console.log('-> DB is connected.'));
 
-	connectionStatus = db.connections[0].readyState;
+	connectionStatus = mongoose.connections[0].readyState;
 };
 
 export const dbDisconnect = async () => {
 	if (connectionStatus == 1) {
-		await mongoose.connection.close(true);
-		console.log('-> DB connection is closed');
+		await mongoose.connection.close(true).then(() => console.log('-> DB connection is closed'));
+
 		connectionStatus = 0;
 	}
 };
