@@ -1,17 +1,20 @@
-<!-- <script lang="ts">
-</script> -->
+<script lang="ts">
+	import '../../app.css';
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
+</script>
 
 <div class="posts">
 	<aside>
 		<h4>Posts</h4>
 		<nav>
 			<ul>
-				<li>
-					<a href="/posts/one">One</a>
-				</li>
-				<li>
-					<a href="/posts/two">Two</a>
-				</li>
+				{#each data.posts as { slug, title }}
+					<li>
+						<a href="/posts/{slug}">{title}</a>
+					</li>
+				{/each}
 			</ul>
 		</nav>
 	</aside>

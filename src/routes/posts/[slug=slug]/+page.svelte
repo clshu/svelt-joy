@@ -1,12 +1,17 @@
 <script lang="ts">
-	// import type { PageData } from './$types';
-	import { page } from '$app/stores';
+	import type { PageData } from './$types';
+	import { formatDate } from '$lib/utils';
 
-	// export let data: PageData;
+	export let data: PageData;
+
+	const createdDate = formatDate(new Date(data.post.createdAt));
 </script>
 
-<h1>Posts slug</h1>
+<hgroup>
+	<h1>{data.post.title}</h1>
+	<h2>{createdDate}</h2>
+</hgroup>
 
-<pre>
-        {JSON.stringify($page, null, 2)}
-</pre>
+<div class="contenet">
+	{@html data.post.content}
+</div>

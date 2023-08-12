@@ -7,11 +7,4 @@
 </script>
 
 <h1>Posts</h1>
-
-<p>Posts length: {posts.length}</p>
-
-{#each posts as { slug, title }}
-	<ul>
-		<a href="/api/posts/{slug}">{title}</a>
-	</ul>
-{/each}
+<p>You can browse posts here.</p>
