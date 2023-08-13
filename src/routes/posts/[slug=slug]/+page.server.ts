@@ -4,9 +4,10 @@ import Post, { type IPost } from '$lib/models/post';
 import { error } from '@sveltejs/kit';
 import { serializeNonPOJOs } from '$lib/utils';
 
+await dbConnect();
 export const load: PageServerLoad = async ({ params }) => {
 	console.log(params);
-	await dbConnect();
+
 	const post: IPost | null = await Post.findOne({ slug: params.slug });
 
 	// console.log(post);

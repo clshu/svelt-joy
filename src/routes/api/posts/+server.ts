@@ -3,9 +3,10 @@ import { dbConnect } from '$lib/db';
 import Post from '$lib/models/post';
 import { json } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({ url }) => {
-	await dbConnect();
+// Initialize the database connection
+await dbConnect();
 
+export const GET: RequestHandler = async ({ url }) => {
 	const limit = Number(url.searchParams.get('limit') ?? 30);
 
 	const urlorder = url.searchParams.get('order') ?? 'asc';
