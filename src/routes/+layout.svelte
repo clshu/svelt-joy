@@ -13,6 +13,9 @@
 		<li>
 			<a href="/posts">Posts</a>
 		</li>
+		<li>
+			<a href="/todos">Todos</a>
+		</li>
 	</ul>
 </nav>
 
