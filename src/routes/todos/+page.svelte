@@ -1,75 +1,33 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import { invalidateAll } from '$app/navigation';
+	import type { ActionData, PageData } from './$types';
 
 	export let data: PageData;
 
-	interface Data {
-		success: boolean;
-		errors: Record<string, string>;
-	}
-
-	let form: Data;
-
-	const removeTodo = async (event: Event) => {
-		const formEl = event.target as HTMLFormElement;
-		const data = new FormData(formEl);
-		// console.dir(formEl);
-
-		const response = await fetch(formEl.action, {
-			method: 'DELETE',
-			body: data
-		});
-
-		const resData = await response.json();
-
-		form = resData;
-
-		formEl.reset();
-
-		await invalidateAll();
-	};
-	const addTodo = async (event: Event) => {
-		const formEl = event.target as HTMLFormElement;
-		const data = new FormData(formEl);
-		// console.dir(formEl);
-
-		const response = await fetch(formEl.action, {
-			method: 'POST',
-			body: data
-		});
-
-		const resData = await response.json();
-
-		form = resData;
-
-		formEl.reset();
-
-		await invalidateAll();
-	};
+	export let form: ActionData;
 </script>
 
 <h1>Todos</h1>
-<pre>{JSON.stringify(data, null, 2)}</pre>
+<pre>{JSON.stringify(form, null, 2)}</pre>
 
 <ul>
 	{#each data.todos as todo}
 		<li>
 			<span>{todo.text}</span>
-			<form on:submit|preventDefault={removeTodo} method="POST">
+			<form method="POST" action="?/removeTodo">
 				<input type="hidden" name="id" value={todo._id} />
-				<button class="delete" type="submit" name="id">X</button>
+				<button class="delete" type="submit">X</button>
 			</form>
 		</li>
 	{/each}
 </ul>
 
-<form on:submit|preventDefault={addTodo} method="POST">
+<form method="POST" action="?/addTodo">
 	<input type="text" name="todo" />
-	{#if form?.errors.todo}
+	{#if form?.missing}
 		<p class="error">This field is required</p>
 	{/if}
 	<button type="submit">+Add Todo</button>
+	<button type="submit" formaction="?/clearAll">Clear</button>
 </form>
 
 {#if form?.success}
