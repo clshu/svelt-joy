@@ -1,18 +1,31 @@
 <script lang="ts">
-	const subscribe = async (e: Event) => {
-		const form = e?.target as HTMLFormElement;
-		const data = new FormData(form);
+	import { invalidate } from '$app/navigation';
+	import type { PageData } from './$types';
 
-		await fetch('/api/newsletter', {
-			method: 'POST',
-			body: data
-		});
+	export let data: PageData;
+
+	$: ({ posts } = data);
+
+	const rerunLoadFunction = () => {
+		invalidate('app:posts');
+		// invalidate('api/posts') It won't in this case due to changing url
+		// invalidate(url => url.href.include('app:posts'))
+		// invalidateAll()
 	};
 </script>
 
-<h1>Newsletters</h1>
+<h1>Posts</h1>
+<button on:click={rerunLoadFunction}> Rerun Load Function </button>
+<h4>Showing {data.posts.length}</h4>
+<ul class="posts">
+	{#each data.posts as { slug }}
+		<li><a href="/posts/{slug}">{slug.replace(/-/g, ' ')}</a></li>
+	{/each}
+</ul>
 
-<form on:submit|preventDefault={subscribe}>
-	<input type="email" name="email" id="n-email" />
-	<button>Subscribe</button>
-</form>
+<style>
+	.posts {
+		line-height: 1;
+		text-transform: capitalize;
+	}
+</style>
